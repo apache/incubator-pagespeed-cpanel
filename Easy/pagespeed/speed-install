@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+
+BEGIN {
+    unshift @INC, '/usr/local/cpanel';
+}
+
+use Cpanel::SafeDir::MK ();
+use Cpanel::FindBin     ();
+use IPC::Open3          ();
+use Cwd;
+my $arch         = `uname -i`;
+chomp($arch);
+my $module_dir   = "/usr/local/apache/modules";
+my $parent_dir   = "/var/mod_pagespeed";
+my $cache_dir    = "$parent_dir" . "/cache";
+my $file_dir     = "$parent_dir" . "/files";
+my $install_dir  = cwd();
+my $cpio_bin     = Cpanel::FindBin::findbin("cpio");
+my $rpm2_bin     = Cpanel::FindBin::findbin("rpm2cpio");
+
+
+if (!-d "$parent_dir") {
+    Cpanel::SafeDir::MK::safemkdir( $parent_dir, '0755' );
+    chdir($parent_dir) || die "Could not create $parent_dir";
+    system("chown nobody.nobody  $parent_dir");
+}
+
+if (!-d "$cache_dir") {
+    Cpanel::SafeDir::MK::safemkdir( $cache_dir, '0755' );
+    chdir($cache_dir) || die "Could not create $cache_dir";
+    system("chown nobody.nobody  $cache_dir");
+}
+
+if (!-d "$file_dir") {
+    Cpanel::SafeDir::MK::safemkdir( $file_dir, '0755' );
+    chdir($file_dir) || die "Could not create $file_dir";
+    system("chown nobody.nobody  $file_dir");
+}
+
+chdir("$install_dir" . "/mod-pagespeed");
+ my $package = "mod-pagespeed-stable_current_" . "$arch" . '.rpm';
+if ( !-e "$package" ) {
+      die "Could not fine the rpm file in install_dir ";
+} else {
+     my $cmd = ("$rpm2_bin $package  | $cpio_bin -idmv");
+     executeForkedTask("$cmd");
+     my $cpcmd = ("/bin/cp -r usr/{lib,lib64}/httpd/modules/mod_pagespeed.so $module_dir");
+      executeForkedTask("$cpcmd");
+     if ( !-e "$module_dir" . "/mod_pagespeed.so" ) {
+         die "Unable to copy the mod_pagespeed.so to module dir";
+      } else {
+        chmod( 0755, "$module_dir" . "/mod_pagespeed.so" );
+        if ( !-e "$install_dir" . "/mod-pagespeed"  . "/pagespeed.conf" ) {
+            die "unable to find the configuration file of mod_pagespeed";
+           } else {
+               chdir("$install_dir" . "/mod-pagespeed");
+               my $cpcomd1 = ("/bin/cp -r pagespeed.conf  /usr/local/apache/conf/");
+               executeForkedTask("$cpcomd1");
+
+           }
+       }
+}
+sub executeForkedTask {
+    my $command = shift;
+    my ( $eh, $rh, $pid, $result, $wh );
+
+    $pid = IPC::Open3::open3( $wh, $rh, $eh, $command );
+    {
+        local $/;
+        $result = readline($rh);
+        $result =~ s/[\n]+//g;
+    }
+
+    waitpid( $pid, 0 );
+
+    return $result || '';
+}
+
