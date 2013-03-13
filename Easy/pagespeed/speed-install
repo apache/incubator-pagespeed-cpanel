@@ -19,6 +19,7 @@ my $file_dir     = "$parent_dir" . "/files";
 my $install_dir  = cwd();
 my $cpio_bin     = Cpanel::FindBin::findbin("cpio");
 my $rpm2_bin     = Cpanel::FindBin::findbin("rpm2cpio");
+my $download_bin = Cpanel::FindBin::findbin("wget");
 
 
 if (!-d "$parent_dir") {
@@ -40,11 +41,19 @@ if (!-d "$file_dir") {
 }
 
 chdir("$install_dir" . "/mod_pagespeed");
-# TODO: download latest RPM
 my $package = "mod-pagespeed-stable_current_" . "$arch" . '.rpm';
 
+# Latest stable distributions:
+# https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_i386.rpm
+# https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_i386.deb
+# https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm
+# https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
+
+my $download_cmd = ("$download_bin https://dl-ssl.google.com/dl/linux/direct/$package");
+executeForkedTask("$download_cmd");
+
 if ( !-e "$package" ) {
-  die "Could not fine the rpm file in install_dir ";
+  die "Could not find the rpm file in install_dir";
 
 } else {
   my $cmd = ("$rpm2_bin $package | $cpio_bin -idmv");
@@ -60,7 +69,7 @@ if ( !-e "$package" ) {
     chmod( 0755, "$module_dir" . "/mod_pagespeed.so" );
 
     if ( !-e "$install_dir" . "/mod_pagespeed"  . "/pagespeed.conf" ) {
-      die "unable to find the configuration file of mod_pagespeed";
+      die "Unable to find the configuration file for mod_pagespeed";
 
     } else {
       chdir("$install_dir" . "/mod_pagespeed");
