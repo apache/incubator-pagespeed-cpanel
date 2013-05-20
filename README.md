@@ -4,16 +4,18 @@ A custom module for CPanel WHM using CPanel Easy Framework - allows easy install
 
 ## Installation instructions
 
-Clone the installation scripts onto your CPanel server:
-
+1. Clone the installation scripts onto your CPanel server:
+```bash
+$> git clone git://github.com/pagespeed/cpanel.git /var/cpanel/easy/apache/custom_opt_mods/Cpanel/pagespeed
 ```
-git clone git://github.com/pagespeed/cpanel.git /var/cpanel/easy/apache/custom_opt_mods/mod_pagespeed
+
+2. Create Speed.pm.tar.gz
+```bash
+$> cd /var/cpanel/easy/apache/custom_opt_mods/Cpanel/Easy && tar -zcvf Speed.pm.tar.gz pagespeed
 ```
 
-That's it! Now you can install mod_pagespeed through CPanel:
+3. Login into your cPanel WHM > EasyApache and look for "mod_pagespeed" option. Alternatively, you can run the easyapache installer from command line (`/scripts/easyapache`). Rebuild the Apache server, reboot it, and you're good to go!
 
-* Run `/scripts/easyapache` from command line, or...
-* Login into WHM and go to "EasyApache Update" and check the mod_pagespeed checkbox
 
 ## Configuring mod_pagespeed
 
