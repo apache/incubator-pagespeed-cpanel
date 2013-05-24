@@ -6,7 +6,7 @@ A custom module for CPanel WHM using CPanel Easy Framework - allows easy install
 
 1. Clone the installation scripts onto your CPanel server:
 ```bash
-$> git clone git://github.com/pagespeed/cpanel.git /var/cpanel/easy/apache/custom_opt_mods/Cpanel/pagespeed
+$> git clone http://github.com/pagespeed/cpanel.git /var/cpanel/easy/apache/custom_opt_mods/Cpanel/
 ```
 
 2. Create Speed.pm.tar.gz
