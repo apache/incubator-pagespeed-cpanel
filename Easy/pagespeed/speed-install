@@ -59,7 +59,7 @@ if ( !-e "$package" ) {
   my $cmd = ("$rpm2_bin $package | $cpio_bin -idmv");
   executeForkedTask("$cmd");
 
-  my $cpcmd = ("/bin/cp -r usr/{lib,lib64}/httpd/modules/mod_pagespeed.so $module_dir");
+  my $cpcmd = ("/bin/cp -r usr/{lib,lib64}/httpd/modules/mod_pagespeed{,_ap24}.so $module_dir");
   executeForkedTask("$cpcmd");
 
   if ( !-e "$module_dir" . "/mod_pagespeed.so" ) {
@@ -67,6 +67,7 @@ if ( !-e "$package" ) {
 
   } else {
     chmod( 0755, "$module_dir" . "/mod_pagespeed.so" );
+    chmod( 0755, "$module_dir" . "/mod_pagespeed_ap24.so" );
 
     if ( !-e "$install_dir" . "/mod_pagespeed"  . "/pagespeed.conf" ) {
       die "Unable to find the configuration file for mod_pagespeed";
