@@ -11,6 +11,10 @@ use Cwd;
 
 my $arch         = `uname -i`;
 chomp($arch);
+if (($arch eq "i386") || ($arch eq "i686") || ($arch eq "i586"))
+{
+  $arch = "i386";
+} 
 
 my $module_dir   = "/usr/local/apache/modules";
 my $parent_dir   = "/var/mod_pagespeed";
@@ -49,6 +53,7 @@ my $package = "mod-pagespeed-stable_current_" . "$arch" . '.rpm';
 # https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm
 # https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
 
+#we are always using stable version
 my $download_cmd = ("$download_bin https://dl-ssl.google.com/dl/linux/direct/$package");
 executeForkedTask("$download_cmd");
 
