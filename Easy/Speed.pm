@@ -6,8 +6,8 @@ our $easyconfig = {
   'note'      => 'mod_pagespeed for Apache 2.x',
   'hastargz'  => 1,
   'ensurepkg' => [qw{rpm cpio}],
-  'depends'   => { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, }, },
-  'implies'   => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, },
+  'depends'   => { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 0, }, },
+  'implies'   => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 0, },
   'src_cd2'   => 'pagespeed/',
 
   'when_i_am_off' => sub {
