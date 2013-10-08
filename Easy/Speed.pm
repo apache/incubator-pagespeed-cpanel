@@ -24,6 +24,16 @@ our $easyconfig = {
     );
   },
 
+  'modself' => sub {
+   # we do not need to use 'reverse' when selecting mod_version in
+   # Apache 2.4 because cPanel use './configure --enable-modules=none'.
+    my ( $easy, $self_hr, $profile_hr ) = @_;
+    if ( $profile_hr->{'Apache'}{'version'} eq '2_4' ) {
+       $self_hr->{'implies'} = { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, };
+       $self_hr->{'depends'} = { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, }, },
+    }
+  },
+
   'step' => {
 
     '0' => {
