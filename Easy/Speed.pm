@@ -6,8 +6,8 @@ our $easyconfig = {
   'note'      => 'mod_pagespeed for Apache 2.x',
   'hastargz'  => 1,
   'ensurepkg' => [qw{rpm cpio}],
-  'depends'   => { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, }, },
-  'implies'   => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, },
+  'depends'   => { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 0, }, },
+  'implies'   => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 0, },
   'src_cd2'   => 'pagespeed/',
 
   'when_i_am_off' => sub {
@@ -22,6 +22,16 @@ our $easyconfig = {
     $self->strip_from_httpconf(
         'Include "/usr/local/apache/conf/pagespeed.conf"'
     );
+  },
+
+  'modself' => sub {
+   # we do not need to use 'reverse' when selecting mod_version in
+   # Apache 2.4 because cPanel use './configure --enable-modules=none'.
+    my ( $easy, $self_hr, $profile_hr ) = @_;
+    if ( $profile_hr->{'Apache'}{'version'} eq '2_4' ) {
+       $self_hr->{'implies'} = { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, };
+       $self_hr->{'depends'} = { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, }, },
+    }
   },
 
   'step' => {
