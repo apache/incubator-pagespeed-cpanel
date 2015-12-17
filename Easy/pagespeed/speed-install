@@ -53,6 +53,10 @@ my $package = "mod-pagespeed-stable_current_" . "$arch" . '.rpm';
 # https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm
 # https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
 
+# Delete old rpm file if exists.
+my $rm_cmd = "rm -rf $package";
+executeForkedTask("$rm_cmd") if -e $package;
+
 #we are always using stable version
 my $download_cmd = ("$download_bin https://dl-ssl.google.com/dl/linux/direct/$package");
 executeForkedTask("$download_cmd");
