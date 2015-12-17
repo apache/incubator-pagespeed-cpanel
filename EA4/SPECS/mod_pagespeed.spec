@@ -3,9 +3,9 @@
 
 Summary: Apache module created by Google to help Make the Web Faster by rewriting web pages to reduce latency and bandwidth.
 Name: ea-apache24-mod_pagespeed
-Version: 1.9
-Release: 32.11
-License: Unknown
+Version: latest
+Release: stable
+License: Apache Software License
 Group: System Environment/Daemons
 URL: http://modpagespeed.com/
 Source0: 456_pagespeed.conf
@@ -57,5 +57,9 @@ rm -rf %{buildroot}
 %config(noreplace) %{_httpd_modconfdir}/*.conf
 
 %changelog
+* Thu Dec 17 2015 Prajith <prajithpalakkuda@gmail.com> - 1.9-2
+- Change version and release to 'latest' and 'stable'
+- update license to ' Apache Software License'
+
 * Tue Dec 15 2015 Prajith <prajithpalakkuda@gmail.com> - 1.9-1
-* Implement a new spec for cPanel
+- Implement a new spec for cPanel
