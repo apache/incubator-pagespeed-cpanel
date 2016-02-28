@@ -4,21 +4,23 @@ A custom module for CPanel WHM using CPanel Easy Framework - allows easy install
 
 ## Installation instructions
 
+### EasyApache 4
 If you are using EasyApache4, please follow the below steps to install mod_pagespeed.
 ```
 $> yum install rpm-build cpio ea-apache24-mod_version
-$> wget https://github.com/Prajithp/cpanel/raw/master/EA4/ea-apache24-mod_pagespeed-1.9-32.11.src.rpm
-$> rpmbuild --rebuild ea-apache24-mod_pagespeed-1.9-32.11.src.rpm
-$> rpm -ivh /root/rpmbuild/RPMS/x86_64/ea-apache24-mod_pagespeed-1.9-32.11.x86_64.rpm
-$> /etc/init.d/httpd restart
+$> wget https://github.com/pagespeed/cpanel/raw/master/EA4/ea-apache24-mod_pagespeed-latest-stable.src.rpm
+$> rpmbuild --rebuild ea-apache24-mod_pagespeed-latest-stable.src.rpm
+$> rpm -ivh /root/rpmbuild/RPMS/x86_64/ea-apache24-mod_pagespeed-latest-stable.x86_64.rpm
+$> /scripts/restartsrv_httpd
 ```
 
-1. Clone the installation scripts onto your CPanel server:
+### EasyApache 3
+1\. Clone the installation scripts onto your CPanel server:
 ```bash
 $> /usr/local/cpanel/3rdparty/bin/git clone https://github.com/pagespeed/cpanel.git /tmp/pagespeed/
 ```
 
-2. Create Speed.pm.tar.gz
+2\. Create Speed.pm.tar.gz
 ```bash
 $> cd /tmp/pagespeed/Easy
 $> tar -zcvf Speed.pm.tar.gz pagespeed
@@ -27,7 +29,7 @@ $> mv Speed.pm Speed.pm.tar.gz -t /var/cpanel/easy/apache/custom_opt_mods/Cpanel
 $> cd && rm -rf /tmp/pagespeed
 ```
 
-3. Login into your cPanel WHM > EasyApache and look for "mod_pagespeed" option. Alternatively, you can run the easyapache installer from command line (`/scripts/easyapache`). Rebuild the Apache server, reboot it, and you're good to go!
+3\. Login into your cPanel WHM > EasyApache and look for "mod_pagespeed" option. Alternatively, you can run the easyapache installer from command line (`/scripts/easyapache`). Rebuild the Apache server, reboot it, and you're good to go!
 
 
 ## Configuring mod_pagespeed
