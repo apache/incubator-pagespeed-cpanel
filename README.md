@@ -7,9 +7,9 @@ A custom module for CPanel WHM using CPanel Easy Framework - allows easy install
 If you are using EasyApache4, please follow the below steps to install mod_pagespeed.
 ```
 $> yum install rpm-build cpio ea-apache24-mod_version
-$> wget https://github.com/Prajithp/cpanel/raw/master/EA4/ea-apache24-mod_pagespeed-1.9-32.11.src.rpm
-$> rpmbuild --rebuild ea-apache24-mod_pagespeed-1.9-32.11.src.rpm
-$> rpm -ivh /root/rpmbuild/RPMS/x86_64/ea-apache24-mod_pagespeed-1.9-32.11.x86_64.rpm
+$> wget https://github.com/Prajithp/cpanel/raw/master/EA4/ea-apache24-mod_pagespeed-latest-stable.src.rpm
+$> rpmbuild --rebuild ea-apache24-mod_pagespeed-latest-stable.src.rpm
+$> rpm -ivh /root/rpmbuild/RPMS/x86_64/ea-apache24-mod_pagespeed-latest-stable.src.rpm
 $> /etc/init.d/httpd restart
 ```
 
