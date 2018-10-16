@@ -7,7 +7,7 @@ our $easyconfig = {
   'hastargz'  => 1,
   'ensurepkg' => [qw{rpm cpio}],
   'depends'   => { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 0, }, },
-  'implies'   => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 0, },
+  'implies'   => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 0, 'Cpanel::Easy::ModRuid2' => 0, },
   'src_cd2'   => 'pagespeed/',
 
   'when_i_am_off' => sub {
@@ -29,8 +29,8 @@ our $easyconfig = {
    # Apache 2.4 because cPanel use './configure --enable-modules=none'.
     my ( $easy, $self_hr, $profile_hr ) = @_;
     if ( $profile_hr->{'Apache'}{'version'} eq '2_4' ) {
-       $self_hr->{'implies'} = { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, };
-       $self_hr->{'depends'} = { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, }, },
+       $self_hr->{'implies'} = { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, 'Cpanel::Easy::ModRuid2' => 0, };
+       $self_hr->{'depends'} = { 'optmods' => { 'Cpanel::Easy::Apache::Deflate' => 1, 'Cpanel::Easy::Apache::Version' => 1, 'Cpanel::Easy::ModRuid2' => 0, }, },
     }
   },
 

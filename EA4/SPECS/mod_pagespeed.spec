@@ -11,6 +11,7 @@ URL: http://modpagespeed.com/
 Source0: 456_pagespeed.conf
 BuildRequires: wget
 BuildRequires: cpio
+Conflicts: %{ns_name}-mod_ruid2
 Requires(pre): ea-apache24 ea-apache24-mod_version
 
 # Suppres auto-provides for module DSO
@@ -57,6 +58,9 @@ rm -rf %{buildroot}
 %config(noreplace) %{_httpd_modconfdir}/*.conf
 
 %changelog
+* Mon Jun 28 2016 Prajith <prajithpalakkuda@gmail.com> - 1.9-3
+- Added mod_ruid2 as conflict package
+
 * Thu Dec 17 2015 Prajith <prajithpalakkuda@gmail.com> - 1.9-2
 - Change version and release to 'latest' and 'stable'
 - update license to ' Apache Software License'
