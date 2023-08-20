@@ -62,7 +62,7 @@ If you are running EasyApache4, follow these steps to upgrade.
 
 ## Configuring mod_pagespeed
 
-The installation script will copy a default **pagespeed.conf** file into `/usr/local/apache/conf/` on your server. Please consult the following pages to customize your configuration:
+The installation script will copy a default **pagespeed.conf** file into `/etc/apache2/conf.modules.d/` on your server. Please consult the following pages to customize your configuration:
 
 - [mod_pagespeed module configuration](https://developers.google.com/speed/docs/mod_pagespeed/configuration)
 - [configuring mod_pagespeed filters](https://developers.google.com/speed/docs/mod_pagespeed/config_filters)
